@@ -48,13 +48,15 @@ Spring Boot 4.1 + Java 21 API。
 |---|---|---|
 | `db/migration/V1__create_schema.sql` | 全部資料表 | 正式、開發都會 |
 | `db/migration/V2__seed_categories.sql` | 14 個分類（後台沒有分類管理） | 正式、開發都會 |
-| `db/dev/R__dev_seed.sql` | 8 產品、3 案例、6 詢價、測試管理者（由前端 mocks 轉出） | 只有 dev |
+| `db/migration/V3__admin_user_role.sql` | 管理者角色（ADMIN／VIEWER） | 正式、開發都會 |
+| `db/sample/R__sample_data.sql` | 8 產品、3 案例、6 詢價 | dev、demo |
+| `db/dev/R__dev_admin.sql` | 開發用管理者 | 只有 dev |
 
 - 資料表結構只能用新的 migration 修改，不要改已經執行過的 V 檔。
-- `R__dev_seed.sql` 內容改了會重跑，但已存在的列不會被覆蓋；要整個重來就 `docker compose down -v` 清掉資料庫。
+- `R__` 開頭的檔案內容改了會重跑，但已存在的列不會被覆蓋；要整個重來就 `docker compose down -v` 清掉資料庫。
 - 時間一律以 UTC 存。
 
-測試管理者（只在 dev，階段 6 的登入才會用到）：
+開發用管理者（只在 dev）：
 
 | 帳號 | 密碼 |
 |---|---|

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { login, type LoginState } from "@/app/admin/actions";
 import Logo from "@/components/Logo";
+import { DEMO_MODE } from "@/lib/demo";
 
 const ERRORS: Record<NonNullable<LoginState["error"]>, string> = {
   invalid: "帳號或密碼錯誤。",
@@ -40,6 +41,11 @@ export default function LoginForm() {
       >
         {pending ? "登入中…" : "登入 →"}
       </button>
+      {DEMO_MODE && (
+        <p className="border border-brand bg-highlight p-3 text-sm">
+          Demo 唯讀帳號：<b className="font-mono">demo</b>／<b className="font-mono">lumenfield-demo</b>
+        </p>
+      )}
       {state.error && (
         <p role="alert" className="text-sm text-red-600 dark:text-red-400">
           {ERRORS[state.error]}

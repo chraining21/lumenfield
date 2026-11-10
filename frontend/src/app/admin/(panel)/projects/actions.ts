@@ -20,7 +20,7 @@ export type ProjectPayload = {
   images: { url: string }[];
 };
 
-export type SaveError = { error: "slug" | "invalid" | "failed" };
+export type SaveError = { error: "slug" | "invalid" | "readonly" | "failed" };
 
 // 成功：清掉前台案例快取並回列表；失敗回傳原因給表單顯示
 export async function saveProject(id: number | null, payload: ProjectPayload): Promise<SaveError | undefined> {
@@ -31,6 +31,7 @@ export async function saveProject(id: number | null, payload: ProjectPayload): P
   });
   if (res.status === 409) return { error: "slug" };
   if (res.status === 400) return { error: "invalid" };
+  if (res.status === 403) return { error: "readonly" };
   if (!res.ok) return { error: "failed" };
 
   updateTag(TAGS.projects);

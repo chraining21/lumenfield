@@ -14,6 +14,7 @@ import {
   inputClass as input,
   nextTempId,
   pickButton,
+  READONLY_MESSAGE,
   Section,
   SLUG_PATTERN,
   uploadFile,
@@ -44,7 +45,11 @@ export default function ProductForm({ product, others, categories }: Props) {
   return <Editor key={`${initial.id}-${bfcacheId}`} initial={initial} others={others} categories={categories} />;
 }
 
-const SAVE_ERRORS = { invalid: "資料格式不正確，請檢查後再存。", failed: "儲存失敗，請稍後再試。" };
+const SAVE_ERRORS = {
+  invalid: "資料格式不正確，請檢查後再存。",
+  readonly: READONLY_MESSAGE,
+  failed: "儲存失敗，請稍後再試。",
+};
 
 function Editor({ initial, others, categories }: { initial: Product; others: Product[]; categories: Category[] }) {
   const formRef = useRef<HTMLFormElement>(null);

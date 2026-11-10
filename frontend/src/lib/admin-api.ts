@@ -50,7 +50,8 @@ export async function getAdminInquiry(id: number): Promise<Inquiry | null> {
   return Number.isInteger(id) ? getJson<Inquiry>(`/api/admin/inquiries/${id}`) : null;
 }
 
-export async function getCurrentAdmin(): Promise<{ username: string }> {
+// role：ADMIN 可讀寫；VIEWER 是公開 demo 用的唯讀帳號
+export async function getCurrentAdmin(): Promise<{ username: string; role: "ADMIN" | "VIEWER" }> {
   const res = await adminFetch("/api/admin/me");
   if (!res.ok) throw new Error(`GET /api/admin/me failed: ${res.status}`);
   return res.json();

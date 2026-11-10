@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lumenfield.admin.AdminRole;
 import com.lumenfield.admin.AdminUser;
 import com.lumenfield.admin.AdminUserRepository;
 
@@ -69,6 +70,40 @@ class AdminAuthTests {
 		}
 		// 鎖住期間連正確密碼也擋
 		assertThat(login("locktest", "right-password")).hasStatus(HttpStatus.TOO_MANY_REQUESTS);
+	}
+
+	@Test
+	void viewerCanReadButNotWrite() {
+		admins.save(new AdminUser("viewer", encoder.encode("viewer-password"), AdminRole.VIEWER));
+		MvcTestResult login = login("viewer", "viewer-password");
+		assertThat(login).hasStatusOk()
+			.bodyJson()
+			.hasPathSatisfying("$.role", v -> v.assertThat().isEqualTo("VIEWER"));
+		MockHttpSession session = (MockHttpSession) login.getMvcResult().getRequest().getSession(false);
+
+		assertThat(mvc.get().uri("/api/admin/me").session(session)).hasStatusOk();
+		assertThat(mvc.get().uri("/api/admin/products").session(session)).hasStatusOk();
+		assertThat(mvc.get().uri("/api/admin/inquiries").session(session)).hasStatusOk();
+
+		assertThat(mvc.put()
+			.uri("/api/admin/products/1")
+			.session(session)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content("{}")).hasStatus(HttpStatus.FORBIDDEN);
+		assertThat(mvc.post()
+			.uri("/api/admin/uploads?type=image")
+			.session(session)
+			.multipart()
+			.file("file", new byte[] { 1 })).hasStatus(HttpStatus.FORBIDDEN);
+
+		assertThat(mvc.post().uri("/api/admin/logout").session(session)).hasStatus(HttpStatus.NO_CONTENT);
+	}
+
+	@Test
+	void adminLoginReportsAdminRole() {
+		assertThat(login("admin", "lf-admin-dev-only")).hasStatusOk()
+			.bodyJson()
+			.hasPathSatisfying("$.role", v -> v.assertThat().isEqualTo("ADMIN"));
 	}
 
 	@Test

@@ -29,9 +29,13 @@ export function useLatest<T>(value: T) {
 
 export type Uploaded = { url: string; fileName: string; sizeBytes: number };
 
+// demo 唯讀帳號（後端 VIEWER）存檔、上傳都會被擋（403）
+export const READONLY_MESSAGE = "這是唯讀的 demo 帳號：可以瀏覽和試填，但不能存檔或上傳。";
+
 const UPLOAD_ERRORS: Record<number, string> = {
   400: "檔案格式不支援",
   401: "登入已過期，請重新登入",
+  403: READONLY_MESSAGE,
   413: "檔案太大（照片 10MB、檔案 50MB 以內）",
 };
 

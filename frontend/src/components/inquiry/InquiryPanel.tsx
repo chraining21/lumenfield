@@ -5,6 +5,7 @@ import { useState, useSyncExternalStore, useTransition } from "react";
 import { submitInquiry } from "@/app/[locale]/inquiry/actions";
 import LampArt from "@/components/LampArt";
 import { Link } from "@/i18n/navigation";
+import { DEMO_MODE } from "@/lib/demo";
 import { clearCart, removeFromCart, setCartQty, useInquiryCart } from "@/lib/inquiry-cart";
 import { localized, toDataLocale } from "@/lib/localized";
 import { lightTypeOf } from "@/lib/product";
@@ -152,6 +153,7 @@ export default function InquiryPanel({ products, categories }: { products: Produ
         className="grid h-fit gap-4 border border-ink bg-surface p-6 min-[900px]:sticky min-[900px]:top-24"
       >
         <h2 className="border-b-2 border-ink pb-2 font-bold tracking-wide">{t("formTitle")}</h2>
+        {DEMO_MODE && <p className="border border-brand bg-highlight p-3 text-sm">{t("demoNotice")}</p>}
         <label>
           {label("name", true)}
           <input name="name" required maxLength={100} autoComplete="name" className={field} />

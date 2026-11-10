@@ -160,7 +160,8 @@
     "doneTitle": "已收到您的詢價",
     "doneNo": "詢價編號",
     "doneText": "我們會盡快以 Email 或電話與您聯繫。",
-    "backHome": "回首頁"
+    "backHome": "回首頁",
+    "demoNotice": "這是作品集 demo：請勿填寫真實的個人資料。送出的內容會出現在公開的 demo 後台，任何人都看得到。"
   },
   "About": {
     "philosophy": "明野理念",

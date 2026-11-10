@@ -160,7 +160,8 @@
     "doneTitle": "Thank you for your inquiry",
     "doneNo": "Inquiry number",
     "doneText": "We will contact you by email or phone shortly.",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "demoNotice": "This is a portfolio demo. Please do not enter real personal details: submissions appear in the public demo admin panel."
   },
   "About": {
     "philosophy": "Philosophy",

@@ -23,7 +23,7 @@ export type ProductPayload = {
   files: { kind: ProductFileKind; url: string; fileName: string; sizeBytes?: number }[];
 };
 
-export type SaveError = { error: "slug" | "modelNo" | "invalid" | "failed" };
+export type SaveError = { error: "slug" | "modelNo" | "invalid" | "readonly" | "failed" };
 
 // 成功：清掉前台產品快取（下一個請求就是新資料）並回列表；失敗回傳原因給表單顯示
 export async function saveProduct(id: number | null, payload: ProductPayload): Promise<SaveError | undefined> {
@@ -37,6 +37,7 @@ export async function saveProduct(id: number | null, payload: ProductPayload): P
     return { error: detail === "modelNo" ? "modelNo" : "slug" };
   }
   if (res.status === 400) return { error: "invalid" };
+  if (res.status === 403) return { error: "readonly" };
   if (!res.ok) return { error: "failed" };
 
   updateTag(TAGS.products);

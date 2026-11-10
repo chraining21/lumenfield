@@ -43,7 +43,18 @@ class AdminAuthController {
 	record LoginRequest(@NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 200) String password) {
 	}
 
-	record Me(String username) {
+	/** role：ADMIN 或 VIEWER，前端用來顯示唯讀提示 */
+	record Me(String username, String role) {
+
+		static Me of(Authentication auth) {
+			String role = auth.getAuthorities()
+				.stream()
+				.map(a -> a.getAuthority().replaceFirst("^ROLE_", ""))
+				.findFirst()
+				.orElseThrow();
+			return new Me(auth.getName(), role);
+		}
+
 	}
 
 	@PostMapping("/login")
@@ -72,7 +83,7 @@ class AdminAuthController {
 		context.setAuthentication(auth);
 		SecurityContextHolder.setContext(context);
 		contextRepository.saveContext(context, request, response);
-		return new Me(auth.getName());
+		return Me.of(auth);
 	}
 
 	@PostMapping("/logout")
@@ -87,7 +98,7 @@ class AdminAuthController {
 
 	@GetMapping("/me")
 	Me me(Authentication auth) {
-		return new Me(auth.getName());
+		return Me.of(auth);
 	}
 
 }

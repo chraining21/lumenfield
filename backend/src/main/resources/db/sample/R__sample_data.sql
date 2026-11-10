@@ -1,6 +1,5 @@
--- 開發用假資料：只在 dev profile 載入（application-dev.properties 的 spring.flyway.locations）
--- 由 frontend/src/mocks 轉出；內容變更時 Flyway 會重跑本檔，已存在的列不覆蓋（ON DUPLICATE KEY 不更新）
--- 測試管理者 admin 的密碼見 backend/README.md
+-- 範例資料（產品、案例、詢價）：dev 與 demo profile 載入，正式環境不載入
+-- 內容變更時 Flyway 會重跑本檔，已存在的列不覆蓋（ON DUPLICATE KEY 不更新）
 
 INSERT INTO product (id, slug, model_no, name_zh, name_en, wattage, color_temperature, dimensions, ip_rating, price, price_visible) VALUES
     (1, 'lf-dl-090', 'LF-DL-090', '防眩深藏嵌燈 90', 'Deep Anti-Glare Downlight 90', '9W / 12W', '2700K / 3000K / 4000K', 'Ø90 × H110 mm', 'IP20', 1280, TRUE),
@@ -147,8 +146,4 @@ INSERT INTO inquiry_item (id, inquiry_id, product_id, model_no_snapshot, product
     (8, 5, NULL, 'LF-DL-075', '舊款嵌燈 75', 'Legacy Downlight 75', 10),
     (9, 5, 2, 'LF-DL-150', '高演色筒燈 150', 'High-CRI Downlight 150', 10),
     (10, 6, 1, 'LF-DL-090', '防眩深藏嵌燈 90', 'Deep Anti-Glare Downlight 90', 8)
-ON DUPLICATE KEY UPDATE id = id;
-
-INSERT INTO admin_user (id, username, password_hash) VALUES
-    (1, 'admin', '$2a$10$5WJ31Q0seawagz8UbAwRQOyVrrBmxzf9q5W9YEca6v1CsfSpg9Vyy')
 ON DUPLICATE KEY UPDATE id = id;

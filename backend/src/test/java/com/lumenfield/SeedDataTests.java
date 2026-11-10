@@ -11,11 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lumenfield.inquiry.InquiryRepository;
 
-// 正式只有分類；dev 另外載入假資料（5-4 決定：分類進正式、假資料只在開發）
+// 正式只有分類；dev 另外載入範例資料與開發用管理者；demo 載入範例資料與唯讀帳號（管理者由環境變數建立）
 class SeedDataTests {
 
 	@Nested
@@ -81,6 +82,32 @@ class SeedDataTests {
 					"SELECT product_id, product_name_snapshot_zh FROM inquiry_item WHERE model_no_snapshot = 'LF-DL-075'"))
 				.containsEntry("product_id", null)
 				.containsEntry("product_name_snapshot_zh", "舊款嵌燈 75");
+		}
+
+		private int count(String table) {
+			return jdbc.queryForObject("SELECT COUNT(*) FROM " + table, Integer.class);
+		}
+
+	}
+
+
+	@Nested
+	@Import(TestcontainersConfiguration.class)
+	@SpringBootTest
+	@ActiveProfiles("demo")
+	@TestPropertySource(properties = { "OWNER_USERNAME=owner", "OWNER_PASSWORD=owner-secret" })
+	class Demo {
+
+		@Autowired
+		JdbcTemplate jdbc;
+
+		@Test
+		void loadsSampleDataAndAccountsWithoutDevAdmin() {
+			assertThat(count("product")).isEqualTo(8);
+			assertThat(count("project")).isEqualTo(3);
+			assertThat(jdbc.queryForList("SELECT username, role FROM admin_user ORDER BY username"))
+				.extracting(r -> r.get("username") + ":" + r.get("role"))
+				.containsExactly("demo:VIEWER", "owner:ADMIN");
 		}
 
 		private int count(String table) {
