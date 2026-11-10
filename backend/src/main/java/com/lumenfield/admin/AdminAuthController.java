@@ -66,7 +66,7 @@ class AdminAuthController {
 	@PostMapping("/login")
 	Me login(@Validated @RequestBody LoginRequest req, HttpServletRequest request, HttpServletResponse response) {
 		boolean limited = viewerUsername.isBlank() || !viewerUsername.equalsIgnoreCase(req.username().strip());
-		if (limited && attempts.isLocked(req.username())) {
+		if (limited && attempts.isLocked(request.getRemoteAddr(), req.username())) {
 			throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many failed logins, try again later");
 		}
 		Authentication auth;
@@ -76,12 +76,12 @@ class AdminAuthController {
 		}
 		catch (AuthenticationException ex) {
 			if (limited) {
-				attempts.failed(req.username());
+				attempts.failed(request.getRemoteAddr(), req.username());
 			}
 			// 帳號不存在或密碼錯誤回同一個錯誤，不透露帳號是否存在
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
 		}
-		attempts.succeeded(req.username());
+		attempts.succeeded(request.getRemoteAddr(), req.username());
 
 		// 防 session fixation：登入一律換新的 session
 		HttpSession old = request.getSession(false);

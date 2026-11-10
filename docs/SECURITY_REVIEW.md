@@ -28,6 +28,10 @@
 | 17 | demo 後台看得到其他訪客的個資 | **發現問題 → 已修（F3）** |
 | 18 | 前台缺安全標頭（點擊劫持） | **發現問題 → 已修（F4）** |
 | 19 | 繞過前端直接打後端 API | **加強 → 已做（F6）** |
+| 20 | 故意輸錯把管理者帳號鎖住 | **發現問題 → 已修（F7）** |
+| 21 | 詢價限量只算全站總量 | **加強 → 已做（F8）** |
+| 22 | 通知信內文 HTML 注入 | 通過（純文字信） |
+| 23 | 匯出 Excel 公式注入 | 不適用（沒有匯出功能） |
 
 ## 測試項目明細
 
@@ -89,7 +93,7 @@
 ### 12. Session 與 cookie
 - 登入成功換新 Session（防 session fixation）
 - 前台 cookie `lf_admin_session`：`HttpOnly`、正式環境 `Secure`、`SameSite=Lax`、只送 `/admin`
-- 管理者帳號連錯 5 次鎖 15 分鐘（429），正確密碼也擋
+- 同一 IP 對同一帳號連錯 5 次鎖 15 分鐘（429），正確密碼也擋（依 IP 計次見 F7）
 
 ### 13. Next middleware 繞過
 - 帶 `x-middleware-subrequest` 標頭打 `/admin` → 仍 307 轉登入頁
@@ -99,19 +103,28 @@
 - 前端 `npm audit --omit=dev`：0 個（開發工具 eslint 底下有 7 個 moderate，不會部署出去）
 - 後端 104 個執行期套件比對 OSV 弱點資料庫：0 個
 
+### 22. 通知信內文 HTML 注入
+- 疑慮：姓名填 `<a href="釣魚網址">點此查看訂單</a>`，收件人在信裡看到像系統發的連結
+- 通知信用 `SimpleMailMessage`，是 `text/plain` 純文字信，HTML 只會顯示成原始文字，不會變成連結
+- 公開 demo 沒設定 `app.inquiry.notify-to`，不寄信
+- 剩下：郵件軟體可能把純文字裡的網址自動變成連結；所有聯絡表單都有這個情況，無法完全避免
+
+### 23. 匯出 Excel 公式注入
+- 目前沒有匯出詢價的功能，不適用
+- 日後要做匯出：開頭是 `=`、`+`、`-`、`@` 的欄位前面加 `'`，避免 Excel 把內容當公式執行
+
 ## 發現的問題與修正
 
 ### F1 任何人都能鎖住 demo 帳號（中）
 - 重現：用 `demo` 連續輸錯 5 次 → 正確密碼也回 429，所有訪客 15 分鐘內無法登入 demo
-- 修正：設定為 demo 唯讀帳號的使用者名稱不計失敗次數（密碼本來就公開，鎖了沒有保護作用）；其他帳號照樣鎖
+- 修正：設定為 demo 唯讀帳號的使用者名稱不計失敗次數（密碼本來就公開，鎖了沒有保護作用）；其他帳號照樣鎖（改為依 IP 計次，見 F7）
 - 驗證：demo 輸錯 6 次後正確密碼 200；owner 輸錯 5 次後 429
 - 測試：`SecurityHardeningTests.viewerIsNeverLockedButOthersAre`
 
 ### F2 詢價沒有數量上限（中）
 - 重現：連續送 30 筆全部成功，可無限塞進免費資料庫（5GB 上限）
-- 修正：demo 全站每小時最多 30 筆（`app.inquiry.max-per-hour`），超過回 429，表單顯示「目前送出的詢價太多…」
+- 修正：demo 全站每小時最多 30 筆（`app.inquiry.max-per-hour`），超過回 429，表單顯示「目前送出的詢價太多…」（另加依訪客限量，見 F8）
 - 驗證：第 31 筆起 429；瀏覽器顯示提示
-- 測試：`SecurityHardeningTests.limitsInquiriesPerHour`
 
 ### F3 demo 後台看得到其他訪客的個資（中）
 - 問題：demo 帳號公開，訪客若填真實 Email、電話，其他人登入 demo 後台都看得到
@@ -134,9 +147,29 @@
 - 驗證：不帶／帶錯 → 403；帶對 → 200；整個網站功能正常
 - 測試：`SecurityHardeningTests.apiNeedsInternalToken`、`filesAndHealthStayOpenWithoutToken`
 
+### F7 任何人都能鎖住管理者帳號（中）
+- 來源：外部意見回饋
+- 問題：鎖定只依帳號計次。知道或猜到管理者帳號的人，每 15 分鐘故意輸錯 5 次，管理者就永遠登不進後台
+- 修正：
+  - Next 把訪客 IP 用 `X-Client-IP` 轉給後端（取自 Vercel 會覆寫、訪客無法偽造的 `x-forwarded-for`）
+  - 後端只在內部密鑰正確時採信這個標頭，格式不像 IP 就不採信（`InternalTokenFilter`）
+  - 鎖定改依「IP＋帳號」計次：別人輸錯只鎖住他自己的 IP；紀錄超過 1 萬筆時清掉沒在鎖定中的，避免記憶體一直長大
+- 不做：TOTP 兩步驟驗證。只有一個管理者，密碼只放在 Render 環境變數，效益不大
+- 測試：`SecurityHardeningTests.viewerIsNeverLockedButOthersAre`（IP A 被鎖、IP B 照常登入）、`malformedClientIpFallsBackToConnectionAddress`
+
+### F8 詢價依訪客限量＋honeypot（加強）
+- 來源：外部意見回饋
+- 問題：F2 只限全站總量，有人洗版時一般訪客也送不出去
+- 修正：
+  - 每個訪客 IP 每小時最多 5 筆（`app.inquiry.max-per-ip-per-hour`）；全站 30 筆保留，當換很多 IP 洗版時的最後防線
+  - 表單加 honeypot 隱藏欄位 `website`（移出畫面、Tab 鍵和螢幕閱讀器都跳過）；有填就假裝成功、不存資料庫
+- 不做：Cloudflare Turnstile。要另外申請帳號和金鑰，demo 用不到
+- 測試：`SecurityHardeningTests.limitsInquiriesPerVisitorAndInTotal`
+
 ## 剩下的風險（接受）
 
-- **詢價限量是全站總量**：有人洗版時，正常訪客也會暫時送不出去。後端只看得到 Next 伺服器的 IP，無法依訪客限量；作品集 demo 可接受。
+- **換很多 IP 洗版**：每個 IP 5 筆，換 IP 還是能用掉全站 30 筆的額度，這時一般訪客會暫時送不出去。作品集 demo 可接受。
+- **換很多 IP 猜管理者密碼**：每個 IP 每 15 分鐘只能試 5 次，密碼夠長就猜不到。
 - **登入鎖定與詢價限量存在記憶體**：後端重啟就歸零。只有一台後端時足夠。
 - **沒有完整的 Content-Security-Policy**：只限制被嵌入（frame-ancestors）。完整 CSP 要處理主題切換的行內腳本，之後再做。
 - **管理者上傳的檔案在 Render 會消失**：免費方案限制，見 `DEPLOY.md`。
@@ -174,4 +207,4 @@ curl -i http://127.0.0.1:8081/api/products
 curl -i -H "X-Internal-Token: local-test-token" http://127.0.0.1:8081/api/products
 ```
 
-自動測試：`cd backend && mvn test`（56 個，含上面列出的資安測試）。
+自動測試：`cd backend && mvn test`（57 個，含上面列出的資安測試）。

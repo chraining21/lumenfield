@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { adminFetch } from "@/lib/admin-api";
 import { ADMIN_COOKIE } from "@/lib/admin-cookie";
 import { backendFetch } from "@/lib/api";
+import { clientIpHeader } from "@/lib/client-ip";
 
 export type LoginState = { error?: "invalid" | "locked" | "failed" };
 
@@ -22,7 +23,7 @@ export async function login(_prev: LoginState, form: FormData): Promise<LoginSta
   try {
     res = await backendFetch("/api/admin/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...(await clientIpHeader()) },
       body: JSON.stringify({ username: form.get("username"), password: form.get("password") }),
     });
   } catch {

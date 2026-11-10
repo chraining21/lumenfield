@@ -64,6 +64,7 @@ export default function InquiryPanel({ products, categories }: { products: Produ
         message: text("note"),
         locale: toDataLocale(locale),
         items: items.map((i) => ({ productId: i.product.id, quantity: i.qty })),
+        website: text("website"),
       });
       if (result.ok) {
         setDoneNo(result.inquiryNo);
@@ -174,6 +175,14 @@ export default function InquiryPanel({ products, categories }: { products: Produ
           {label("note")}
           <textarea name="note" rows={4} maxLength={5000} className={field} />
         </label>
+        {/* honeypot：移出畫面、螢幕閱讀器與 Tab 鍵都跳過，真人不會填；機器人常把每個欄位都填上 */}
+        <input
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="absolute -left-[9999px] h-px w-px opacity-0"
+        />
         <button
           type="submit"
           disabled={items.length === 0 || pending}

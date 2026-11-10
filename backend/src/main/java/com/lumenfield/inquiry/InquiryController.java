@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 /** 前台送出詢價（不需登入）。 */
 @RestController
 @RequestMapping("/api/inquiries")
@@ -28,8 +30,8 @@ class InquiryController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	Created create(@Validated @RequestBody InquiryRequest request) {
-		if (!rateLimit.tryAcquire()) {
+	Created create(@Validated @RequestBody InquiryRequest request, HttpServletRequest http) {
+		if (!rateLimit.tryAcquire(http.getRemoteAddr())) {
 			throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many inquiries, try again later");
 		}
 		return new Created(service.create(request).getInquiryNo());
