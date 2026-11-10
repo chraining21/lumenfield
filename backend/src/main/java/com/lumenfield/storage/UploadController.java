@@ -37,6 +37,9 @@ class UploadController {
 			"png", new byte[][] { { (byte) 0x89, 'P', 'N', 'G' } },
 			"webp", new byte[][] { { 'R', 'I', 'F', 'F' } });
 
+	/** WebP 是 RIFF 容器，第 8～11 byte 另外要是 "WEBP"（不然可能是 WAV、AVI） */
+	private static final byte[] WEBP_FORMAT = { 'W', 'E', 'B', 'P' };
+
 	private final FileStorage storage;
 
 	UploadController(FileStorage storage) {
@@ -65,7 +68,7 @@ class UploadController {
 		if (file.getSize() > (image ? MAX_IMAGE_BYTES : MAX_FILE_BYTES)) {
 			throw new ResponseStatusException(HttpStatus.CONTENT_TOO_LARGE, "File too large");
 		}
-		if (image && !hasSignature(file, IMAGE_SIGNATURES.get(ext))) {
+		if (image && !hasSignature(file, ext)) {
 			throw bad("Not a valid " + ext + " image");
 		}
 		try (InputStream in = file.getInputStream()) {
@@ -74,11 +77,15 @@ class UploadController {
 		}
 	}
 
-	private static boolean hasSignature(MultipartFile file, byte[][] signatures) throws IOException {
+	private static boolean hasSignature(MultipartFile file, String ext) throws IOException {
 		try (InputStream in = file.getInputStream()) {
-			byte[] head = in.readNBytes(4);
-			return Arrays.stream(signatures)
+			byte[] head = in.readNBytes(12);
+			boolean signature = Arrays.stream(IMAGE_SIGNATURES.get(ext))
 				.anyMatch(sig -> head.length >= sig.length && Arrays.equals(head, 0, sig.length, sig, 0, sig.length));
+			if (!ext.equals("webp")) {
+				return signature;
+			}
+			return signature && head.length == 12 && Arrays.equals(head, 8, 12, WEBP_FORMAT, 0, 4);
 		}
 	}
 

@@ -155,6 +155,7 @@
     "submit": "送出詢價",
     "sending": "送出中…",
     "submitError": "送出失敗，請稍後再試，或直接來電與我們聯絡。",
+    "submitBusy": "目前送出的詢價太多，請過一段時間再試。",
     "needItems": "請先加入至少一項產品。",
     "doneLabel": "INQUIRY RECEIVED",
     "doneTitle": "已收到您的詢價",

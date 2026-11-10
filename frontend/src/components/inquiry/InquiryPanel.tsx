@@ -23,7 +23,7 @@ export default function InquiryPanel({ products, categories }: { products: Produ
     () => false,
   ); // 讀到 localStorage 前不顯示「清單是空的」
   const [doneNo, setDoneNo] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState<false | "error" | "busy">(false);
   const [pending, startTransition] = useTransition();
 
   const items = cart.flatMap((c) => {
@@ -69,7 +69,7 @@ export default function InquiryPanel({ products, categories }: { products: Produ
         setDoneNo(result.inquiryNo);
         clearCart();
       } else {
-        setFailed(true);
+        setFailed(result.busy ? "busy" : "error");
       }
     });
   };
@@ -184,7 +184,7 @@ export default function InquiryPanel({ products, categories }: { products: Produ
         {hydrated && items.length === 0 && <p className="text-sm text-muted">{t("needItems")}</p>}
         {failed && (
           <p role="alert" className="text-sm text-red-600 dark:text-red-400">
-            {t("submitError")}
+            {t(failed === "busy" ? "submitBusy" : "submitError")}
           </p>
         )}
       </form>

@@ -4,6 +4,8 @@ import java.time.Duration;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.CacheControl;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -15,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 /**
  * 公開下載上傳的照片與檔案。前台以 /files/** 轉到這裡（Next rewrites），瀏覽器不直接連後端。
- * 檔名是 UUID、內容不會變，可以長期快取。
+ * 檔名是 UUID、內容不會變，可以長期快取。照片直接顯示；其他檔案（PDF、CAD、ZIP）一律下載，不在瀏覽器開啟。
  */
 @RestController
 class FileController {
@@ -30,8 +32,13 @@ class FileController {
 	ResponseEntity<Resource> get(@PathVariable String year, @PathVariable String month, @PathVariable String name) {
 		Resource file = storage.load(year + "/" + month + "/" + name)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		MediaType type = MediaTypeFactory.getMediaType(name).orElse(MediaType.APPLICATION_OCTET_STREAM);
+		String disposition = (type.getType().equals("image") ? ContentDisposition.inline() : ContentDisposition.attachment())
+			.build()
+			.toString();
 		return ResponseEntity.ok()
-			.contentType(MediaTypeFactory.getMediaType(name).orElse(MediaType.APPLICATION_OCTET_STREAM))
+			.contentType(type)
+			.header(HttpHeaders.CONTENT_DISPOSITION, disposition)
 			.cacheControl(CacheControl.maxAge(Duration.ofDays(365)).cachePublic().immutable())
 			.body(file);
 	}

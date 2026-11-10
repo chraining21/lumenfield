@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ADMIN_COOKIE } from "@/lib/admin-cookie";
-import { API_URL } from "@/lib/api";
+import { backendFetch } from "@/lib/api";
 import type { Inquiry, Product, Project } from "@/types";
 
 // 後台呼叫後端的唯一入口：帶上登入 Session；沒登入或 Session 過期（401）就回登入頁。
@@ -11,7 +11,7 @@ export async function adminFetch(path: string, init: RequestInit = {}): Promise<
   if (!sessionId) redirect("/admin/login");
   const headers = new Headers(init.headers);
   headers.set("Cookie", `JSESSIONID=${sessionId}`);
-  const res = await fetch(`${API_URL}${path}`, { ...init, headers, cache: "no-store" });
+  const res = await backendFetch(path, { ...init, headers, cache: "no-store" });
   if (res.status === 401) redirect("/admin/login");
   return res;
 }

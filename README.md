@@ -69,3 +69,5 @@ npm run dev
 | [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md) | 資料模型 |
 | [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) | 設計規範 |
 | [`docs/ADR-001-tech-stack.md`](docs/ADR-001-tech-stack.md) | 技術選型與決策紀錄 |
+| [`docs/DEPLOY.md`](docs/DEPLOY.md) | 公開 demo 的部署方式（Vercel＋Render＋TiDB Cloud） |
+| [`docs/SECURITY_REVIEW.md`](docs/SECURITY_REVIEW.md) | 上線前資安測試紀錄 |

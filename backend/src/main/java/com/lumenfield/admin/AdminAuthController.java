@@ -1,5 +1,6 @@
 package com.lumenfield.admin;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,9 +36,14 @@ class AdminAuthController {
 
 	private final SecurityContextRepository contextRepository = new HttpSessionSecurityContextRepository();
 
-	AdminAuthController(AuthenticationManager authenticationManager, LoginAttempts attempts) {
+	/** 公開 demo 的唯讀帳號：密碼本來就公開，不鎖定，避免有人故意輸錯讓大家都登不進去 */
+	private final String viewerUsername;
+
+	AdminAuthController(AuthenticationManager authenticationManager, LoginAttempts attempts,
+			@Value("${app.admin.viewer.username:}") String viewerUsername) {
 		this.authenticationManager = authenticationManager;
 		this.attempts = attempts;
+		this.viewerUsername = viewerUsername;
 	}
 
 	record LoginRequest(@NotBlank @Size(max = 50) String username, @NotBlank @Size(max = 200) String password) {
@@ -59,7 +65,8 @@ class AdminAuthController {
 
 	@PostMapping("/login")
 	Me login(@Validated @RequestBody LoginRequest req, HttpServletRequest request, HttpServletResponse response) {
-		if (attempts.isLocked(req.username())) {
+		boolean limited = viewerUsername.isBlank() || !viewerUsername.equalsIgnoreCase(req.username().strip());
+		if (limited && attempts.isLocked(req.username())) {
 			throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many failed logins, try again later");
 		}
 		Authentication auth;
@@ -68,7 +75,9 @@ class AdminAuthController {
 				.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(req.username(), req.password()));
 		}
 		catch (AuthenticationException ex) {
-			attempts.failed(req.username());
+			if (limited) {
+				attempts.failed(req.username());
+			}
 			// 帳號不存在或密碼錯誤回同一個錯誤，不透露帳號是否存在
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
 		}

@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { adminFetch } from "@/lib/admin-api";
 import { ADMIN_COOKIE } from "@/lib/admin-cookie";
-import { API_URL } from "@/lib/api";
+import { backendFetch } from "@/lib/api";
 
 export type LoginState = { error?: "invalid" | "locked" | "failed" };
 
@@ -20,7 +20,7 @@ const COOKIE_OPTIONS = {
 export async function login(_prev: LoginState, form: FormData): Promise<LoginState> {
   let res: Response;
   try {
-    res = await fetch(`${API_URL}/api/admin/login`, {
+    res = await backendFetch("/api/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: form.get("username"), password: form.get("password") }),

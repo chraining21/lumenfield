@@ -155,6 +155,7 @@
     "submit": "Send inquiry",
     "sending": "Sending…",
     "submitError": "Something went wrong. Please try again later, or call us directly.",
+    "submitBusy": "Too many inquiries right now. Please try again a bit later.",
     "needItems": "Add at least one product first.",
     "doneLabel": "INQUIRY RECEIVED",
     "doneTitle": "Thank you for your inquiry",

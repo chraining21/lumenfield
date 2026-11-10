@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE } from "@/lib/admin-cookie";
-import { API_URL } from "@/lib/api";
+import { backendFetch } from "@/lib/api";
 
 // 後台上傳：轉送給後端 /api/admin/uploads（後端檢查登入、檔案類型與大小）。
 // 用 Route Handler 而不用 Server Action：Server Action 的大小上限是全站共用的，
@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   if (!sessionId) return Response.json({ error: "unauthorized" }, { status: 401 });
 
   // 原樣串流給後端，不把整個檔案讀進記憶體
-  const res = await fetch(`${API_URL}/api/admin/uploads`, {
+  const res = await backendFetch("/api/admin/uploads", {
     method: "POST",
     headers: { Cookie: `JSESSIONID=${sessionId}`, "Content-Type": request.headers.get("content-type") ?? "" },
     body: request.body,
