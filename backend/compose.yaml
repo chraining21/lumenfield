@@ -1,0 +1,24 @@
+# 本機開發用 MySQL。帳號密碼僅供本機，正式環境另行設定。
+services:
+  mysql:
+    image: 'mysql:8.4'
+    environment:
+      - 'MYSQL_DATABASE=light'
+      - 'MYSQL_USER=light'
+      - 'MYSQL_PASSWORD=light-dev-only'
+      - 'MYSQL_ROOT_PASSWORD=root-dev-only'
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'mysql-data:/var/lib/mysql'
+
+  # 本機假信箱：信不會真的寄出，在 http://localhost:8025 查看
+  mailpit:
+    image: 'axllent/mailpit:v1.27'
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+
+volumes:
+  mysql-data:

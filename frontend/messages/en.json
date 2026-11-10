@@ -1,0 +1,207 @@
+{
+  "Metadata": {
+    "title": "Lumenfield Lighting",
+    "description": "End-to-end lighting services: lighting design, luminaire manufacturing, and installation"
+  },
+  "HomePage": {
+    "eyebrow": "LUMENFIELD LIGHTING · EST. 2014",
+    "heroTitle": "From <mark>optical calculation</mark><br></br>to on-site aiming.",
+    "heroText": "Lighting master planning, luminaire design and manufacturing, and lighting installation. Every beam is calculated, built and verified on site.",
+    "ctaProducts": "Products",
+    "ctaProjects": "Projects",
+    "statFounded": "Founded",
+    "statProjects": "Featured projects",
+    "statServices": "End-to-end services",
+    "servicesTitle": "Services",
+    "projectsTitle": "Projects",
+    "projectsAll": "ALL PROJECTS →",
+    "productsTitle": "Products",
+    "productsAll": "FULL CATALOG →",
+    "colName": "Name",
+    "priceAsk": "Ask",
+    "ctaTitle": "Need a quote or a custom luminaire?",
+    "ctaButton": "Start an inquiry →"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "zh-TW": "中文",
+    "en": "English"
+  },
+  "Nav": {
+    "brand": "Lumenfield",
+    "home": "Home",
+    "main": "Main menu",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "products": "Products",
+    "contact": "Contact",
+    "inquiry": "Inquiry",
+    "inquiryCount": "Inquiry list, {count} items",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
+  },
+  "Footer": {
+    "company": "Lumenfield Lighting Co., Ltd.",
+    "companyEn": "明野照明股份有限公司",
+    "contact": "Contact",
+    "links": "Sitemap",
+    "phone": "Tel",
+    "fax": "Fax",
+    "email": "Email",
+    "address": "Address",
+    "addressValue": "Taipei, Taiwan (fictional address)",
+    "rights": "All rights reserved",
+    "disclaimer": "Lumenfield is a fictional brand. This site is a portfolio project; its products, projects and contact details are made up."
+  },
+  "Pages": {
+    "inquiry": "Inquiry List",
+    "backToProjects": "Back to projects",
+    "backToProducts": "Back to products"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The link may be wrong, or the page has been removed.",
+    "home": "Home",
+    "products": "Products",
+    "projects": "Projects"
+  },
+  "Services": {
+    "s01": {
+      "title": "Lighting Design & Master Planning",
+      "desc": "Illuminance calculation, glare control and dynamic lighting for facades, interiors, landscapes and public spaces."
+    },
+    "s02": {
+      "title": "Exhibition & Public Art Lighting",
+      "desc": "Large lantern festivals, installations and sculpture lighting."
+    },
+    "s03": {
+      "title": "Custom Luminaire Manufacturing",
+      "desc": "Purpose-built luminaires with custom housings, IP ratings, special beam angles and smart controls."
+    },
+    "s04": {
+      "title": "Installation & On-site Aiming",
+      "desc": "Experienced crews install; designers test and fine-tune every fixture on site at night."
+    },
+    "s05": {
+      "title": "Festival & Streetscape Planning",
+      "desc": "End-to-end planning and delivery for festivals, old-street revitalisation and community lighting."
+    }
+  },
+  "Products": {
+    "tabType": "By type",
+    "tabSpace": "By space",
+    "all": "All",
+    "count": "{count} products",
+    "empty": "No products in this category yet.",
+    "showAll": "See all products",
+    "ask": "Ask",
+    "add": "+ Inquire",
+    "qty": "Qty",
+    "addToInquiry": "Add to inquiry list",
+    "categories": "Categories",
+    "specs": "Specifications",
+    "wattage": "Power",
+    "cct": "Color temperature",
+    "dimensions": "Dimensions",
+    "ip": "IP rating",
+    "downloads": "Downloads",
+    "application": "Applications",
+    "photo": "Photo",
+    "CATALOG_PDF": "Catalog",
+    "IES": "IES photometric file",
+    "CAD": "CAD drawing",
+    "added": "Added ✓",
+    "goToList": "View inquiry list →"
+  },
+  "Projects": {
+    "category": "Category",
+    "year": "Year",
+    "county": "County",
+    "all": "All",
+    "clear": "Clear filters",
+    "count": "{count} projects",
+    "empty": "No projects match these filters.",
+    "mapHint": "Select a highlighted county to filter",
+    "mapCount": "{name}, {count} projects",
+    "legendHas": "Has projects",
+    "legendDot": "Project location",
+    "location": "Location",
+    "photos": "Photos",
+    "prev": "Previous project",
+    "next": "Next project",
+    "viewPhoto": "View photo {n}",
+    "close": "Close",
+    "prevPhoto": "Previous photo",
+    "nextPhoto": "Next photo"
+  },
+  "Inquiry": {
+    "intro": "No account or payment needed. Add products to your list, leave your contact details, and we will get back to you with a quote.",
+    "items": "Products",
+    "empty": "Your list is empty.",
+    "browse": "Browse products →",
+    "remove": "Remove",
+    "formTitle": "Contact details",
+    "name": "Name",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "note": "Project details",
+    "required": "required",
+    "submit": "Send inquiry",
+    "sending": "Sending…",
+    "submitError": "Something went wrong. Please try again later, or call us directly.",
+    "needItems": "Add at least one product first.",
+    "doneLabel": "INQUIRY RECEIVED",
+    "doneTitle": "Thank you for your inquiry",
+    "doneNo": "Inquiry number",
+    "doneText": "We will contact you by email or phone shortly.",
+    "backHome": "Back to home"
+  },
+  "About": {
+    "philosophy": "Philosophy",
+    "quote": "Good lighting never steals the show: it keeps a space legible and comfortable after dark.",
+    "historyTitle": "History",
+    "historyIntro": "Started as a lighting design studio, then added luminaire manufacturing and an installation team.",
+    "h1": "Lumenfield lighting design studio founded",
+    "h2": "Luminaire development and manufacturing added",
+    "h3": "Installation team formed",
+    "h4": "Incorporated as Lumenfield Lighting Co., Ltd.",
+    "featuresTitle": "Expertise",
+    "f01": {
+      "title": "Integrated Lighting Design",
+      "desc": "Night-time lighting for cityscapes, historic districts, temples and heritage sites, campuses and commercial spaces."
+    },
+    "f02": {
+      "title": "Exhibition & Festival Lighting",
+      "desc": "Lantern festivals and public art installations, from curatorial concept to on-site aiming."
+    },
+    "f03": {
+      "title": "Custom Luminaires",
+      "desc": "In-house R&D and production solve unusual forms and optical distribution challenges."
+    },
+    "f04": {
+      "title": "Professional Installation",
+      "desc": "Rigorous methods and safety standards, overseen from design through completion."
+    },
+    "companyTitle": "Company information",
+    "companyName": "Company name"
+  },
+  "ServicesPage": {
+    "intro": "From lighting master planning and luminaire manufacturing to on-site installation and aiming, one team handles it all.",
+    "ctaTitle": "Have a lighting project in mind?",
+    "ctaButton": "Contact us →"
+  },
+  "Contact": {
+    "intro": "Call or email us about lighting design, luminaires or installation.",
+    "infoTitle": "Contact details",
+    "quoteTitle": "Need a quote?",
+    "quoteText": "Add products to your inquiry list and send it. We will reply with a quote. No account needed.",
+    "toProducts": "Browse products",
+    "toInquiry": "Inquiry list"
+  }
+}

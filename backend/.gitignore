@@ -1,0 +1,15 @@
+target/
+# Maven 套件放在專案內（.mvn/maven.config），不寫 C 槽
+.m2/
+
+### IDE ###
+.idea
+*.iml
+.classpath
+.factorypath
+.project
+.settings
+.vscode/
+
+# 上傳的檔案（app.upload-dir）
+uploads/

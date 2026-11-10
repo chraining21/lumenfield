@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+/* 亮暗切換：<html data-theme="dark">。開關在 3-2 實作。 */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* 技術藍圖：亮色（原型 design/styles/3-blueprint.html） */
+:root {
+  --brand: #f8b62b;
+  --bg: #f3f3ef;
+  --surface: #fbfbf8;
+  --ink: #1d1f22;
+  --muted: #5f636a;
+  --line: #c9cbc6;
+  --grid: rgb(29 31 34 / 0.06);
+  --highlight: rgb(248 182 43 / 0.18);
+  color-scheme: light;
+}
+
+/* 技術藍圖：暗色（藍圖底片感，黃色不變） */
+[data-theme="dark"] {
+  --bg: #121416;
+  --surface: #1a1d20;
+  --ink: #e8e6df;
+  --muted: #9a9ea4;
+  --line: #34383d;
+  --grid: rgb(232 230 223 / 0.05);
+  --highlight: rgb(248 182 43 / 0.14);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-highlight: var(--highlight);
+  --font-sans: var(--font-noto-sans-tc), system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+}
+
+@theme {
+  --container-page: 1200px;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.75;
+  /* 24px 格線背景 */
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--bg);
+}
+
+@utility wrap {
+  width: min(var(--container-page), 100% - 48px);
+  margin-inline: auto;
+}
+
+/* 小字英文標籤：DWG. / SERVICES / 05 */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── 動畫（風格 3 原型） ───────────────────────── */
+
+/* 剖面圖線條依序畫出 */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes fade-in {
+  to { opacity: 1; }
+}
+.draw :is(path, line, rect, circle) {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: draw 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.draw .d2 { animation-delay: 0.6s; }
+.draw .d3 { animation-delay: 1.2s; }
+.draw .beam {
+  opacity: 0;
+  animation: fade-in 1s 1.6s forwards;
+}
+
+/* 捲動進場：由左滑入。用 CSS 捲動時間軸，不支援的瀏覽器直接顯示 */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-16px); }
+}
+@supports (animation-timeline: view()) {
+  .slide {
+    animation: slide-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+
+/* 地圖光點：向外擴散的光圈 */
+@keyframes map-pulse {
+  from { r: 4; opacity: 0.8; }
+  to { r: 14; opacity: 0; }
+}
+.map-pulse {
+  animation: map-pulse 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-pulse {
+    animation: none;
+    opacity: 0.3;
+  }
+  .draw :is(path, line, rect, circle), .draw .beam, .slide {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}

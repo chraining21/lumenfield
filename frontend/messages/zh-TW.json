@@ -1,0 +1,207 @@
+{
+  "Metadata": {
+    "title": "明野照明",
+    "description": "光環境規劃、燈具設計製造與照明工程一條龍服務"
+  },
+  "HomePage": {
+    "eyebrow": "LUMENFIELD LIGHTING · EST. 2014",
+    "heroTitle": "從<mark>光學計算</mark>到<br></br>現場調光。",
+    "heroText": "光環境規劃、燈具設計製造、照明工程承造。每一道光都經過計算、製造與施工驗證。",
+    "ctaProducts": "產品規格",
+    "ctaProjects": "工程實績",
+    "statFounded": "創立",
+    "statProjects": "代表案例",
+    "statServices": "一條龍服務",
+    "servicesTitle": "服務項目",
+    "projectsTitle": "工程實績",
+    "projectsAll": "ALL PROJECTS →",
+    "productsTitle": "產品規格",
+    "productsAll": "FULL CATALOG →",
+    "colName": "名稱",
+    "priceAsk": "詢價",
+    "ctaTitle": "需要報價或客製燈具？",
+    "ctaButton": "開始詢價 →"
+  },
+  "LocaleSwitcher": {
+    "label": "切換語言",
+    "zh-TW": "中文",
+    "en": "English"
+  },
+  "Nav": {
+    "brand": "明野照明",
+    "home": "回首頁",
+    "main": "主選單",
+    "about": "關於明野",
+    "services": "服務項目",
+    "projects": "設計案例",
+    "products": "產品",
+    "contact": "聯絡我們",
+    "inquiry": "詢價",
+    "inquiryCount": "詢價清單，{count} 件",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單"
+  },
+  "Theme": {
+    "toLight": "切換為亮色",
+    "toDark": "切換為暗色"
+  },
+  "Footer": {
+    "company": "明野照明股份有限公司",
+    "companyEn": "LUMENFIELD LIGHTING CO., LTD.",
+    "contact": "聯絡資訊",
+    "links": "網站導覽",
+    "phone": "電話",
+    "fax": "傳真",
+    "email": "Email",
+    "address": "地址",
+    "addressValue": "台北市（虛構地址）",
+    "rights": "版權所有",
+    "disclaimer": "明野照明（LUMENFIELD）是虛構品牌，本網站為作品集展示用，產品、案例與聯絡資訊皆為虛構。"
+  },
+  "Pages": {
+    "inquiry": "詢價清單",
+    "backToProjects": "返回案例列表",
+    "backToProducts": "返回產品列表"
+  },
+  "NotFound": {
+    "title": "找不到這個頁面",
+    "description": "網址可能有誤，或頁面已經移除。",
+    "home": "回首頁",
+    "products": "看產品",
+    "projects": "看作品"
+  },
+  "Services": {
+    "s01": {
+      "title": "整體燈光設計與光環境規劃",
+      "desc": "建築外觀、室內、園區景觀與公共領域的照度計算、眩光控制與動態燈光設計。"
+    },
+    "s02": {
+      "title": "展覽與公共藝術照明",
+      "desc": "大型燈節、裝置藝術與雕塑展品照明。"
+    },
+    "s03": {
+      "title": "訂製燈具開發與製造",
+      "desc": "客製結構、防水防塵等級、特殊光束角與智能控制系統的專用燈具。"
+    },
+    "s04": {
+      "title": "照明工程承造與現場調光",
+      "desc": "資深工班施工，夜間由設計師現場試燈與細部調光。"
+    },
+    "s05": {
+      "title": "節慶活動與街區造街企劃",
+      "desc": "節慶氛圍、老街造街、社區光環境的全案企劃與統包執行。"
+    }
+  },
+  "Products": {
+    "tabType": "依燈型",
+    "tabSpace": "依空間",
+    "all": "全部",
+    "count": "{count} 項產品",
+    "empty": "這個分類目前沒有產品。",
+    "showAll": "看全部產品",
+    "ask": "詢價",
+    "add": "+ 詢價",
+    "qty": "數量",
+    "addToInquiry": "加入詢價清單",
+    "categories": "分類",
+    "specs": "規格",
+    "wattage": "瓦數",
+    "cct": "色溫",
+    "dimensions": "尺寸",
+    "ip": "防護等級",
+    "downloads": "檔案下載",
+    "application": "應用實景",
+    "photo": "照片",
+    "CATALOG_PDF": "型錄",
+    "IES": "IES 配光檔",
+    "CAD": "CAD 圖檔",
+    "added": "已加入 ✓",
+    "goToList": "前往詢價清單 →"
+  },
+  "Projects": {
+    "category": "分類",
+    "year": "年份",
+    "county": "縣市",
+    "all": "全部",
+    "clear": "清除篩選",
+    "count": "{count} 件案例",
+    "empty": "沒有符合條件的案例。",
+    "mapHint": "點選亮起的縣市篩選案例",
+    "mapCount": "{name}，{count} 件案例",
+    "legendHas": "有作品",
+    "legendDot": "案例位置",
+    "location": "地點",
+    "photos": "現場照片",
+    "prev": "上一個案例",
+    "next": "下一個案例",
+    "viewPhoto": "放大檢視第 {n} 張照片",
+    "close": "關閉",
+    "prevPhoto": "上一張",
+    "nextPhoto": "下一張"
+  },
+  "Inquiry": {
+    "intro": "不需登入、不需付款。把想詢價的產品加入清單，留下聯絡方式，我們會盡快回覆報價。",
+    "items": "詢價產品",
+    "empty": "清單還是空的。",
+    "browse": "前往產品列表 →",
+    "remove": "移除",
+    "formTitle": "聯絡資訊",
+    "name": "姓名",
+    "company": "公司",
+    "email": "Email",
+    "phone": "電話",
+    "note": "需求說明",
+    "required": "必填",
+    "submit": "送出詢價",
+    "sending": "送出中…",
+    "submitError": "送出失敗，請稍後再試，或直接來電與我們聯絡。",
+    "needItems": "請先加入至少一項產品。",
+    "doneLabel": "INQUIRY RECEIVED",
+    "doneTitle": "已收到您的詢價",
+    "doneNo": "詢價編號",
+    "doneText": "我們會盡快以 Email 或電話與您聯繫。",
+    "backHome": "回首頁"
+  },
+  "About": {
+    "philosophy": "明野理念",
+    "quote": "好的照明不搶戲：讓空間在夜裡依然看得清楚、待得舒服。",
+    "historyTitle": "企業沿革",
+    "historyIntro": "從一間照明設計工作室開始，逐步加入燈具製造與工程團隊。",
+    "h1": "明野照明設計工作室成立",
+    "h2": "成立燈具開發與製造部門",
+    "h3": "成立照明工程團隊",
+    "h4": "改制為明野照明股份有限公司",
+    "featuresTitle": "專業與服務特色",
+    "f01": {
+      "title": "光環境整合設計",
+      "desc": "涵蓋都市景觀、歷史街區、古蹟宮廟、校園及商業空間之夜間光環境營造。"
+    },
+    "f02": {
+      "title": "藝術策展燈光",
+      "desc": "大型燈節、公共藝術裝置等展演燈光，從策展概念到現場調光。"
+    },
+    "f03": {
+      "title": "客製燈具製造",
+      "desc": "具備研發與生產團隊，解決特殊造型與光學配光難題。"
+    },
+    "f04": {
+      "title": "專業工程團隊",
+      "desc": "堅持嚴謹施工工法與安全標準，從設計到落成全程把關。"
+    },
+    "companyTitle": "公司資訊",
+    "companyName": "公司名稱"
+  },
+  "ServicesPage": {
+    "intro": "從光環境規劃、燈具設計製造到現場施工調光，同一個團隊全程負責。",
+    "ctaTitle": "有照明專案想討論？",
+    "ctaButton": "聯絡我們 →"
+  },
+  "Contact": {
+    "intro": "歡迎來電或來信洽詢照明設計、燈具與工程需求。",
+    "infoTitle": "聯絡資訊",
+    "quoteTitle": "需要報價？",
+    "quoteText": "把產品加入詢價清單後送出，我們會回覆報價，不需登入。",
+    "toProducts": "看產品",
+    "toInquiry": "詢價清單"
+  }
+}
