@@ -7,6 +7,10 @@
 A bilingual (zh-TW / en) product showcase and inquiry site for a fictional lighting company,
 with a Next.js front end and a Spring Boot API.
 
+**線上 demo：https://lumenfield-chi.vercel.app**
+後台 `/admin` 用唯讀帳號 `demo`／`lumenfield-demo` 登入，可以看所有畫面，但不能存檔（詢價的聯絡資料會遮罩）。
+後端在免費主機上，閒置後第一次送出詢價或開後台要等 30～60 秒喚醒。
+
 ## 功能
 
 **前台**
