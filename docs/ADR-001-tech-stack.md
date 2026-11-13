@@ -115,7 +115,7 @@ Spring Boot（backend/）── /api/**（公開）、/api/admin/**（需登入�
 |---|---|---|
 | 前後端連線 | 瀏覽器只連 Next，不直接連後端 | 前台讀資料、送詢價、後台操作都由 Next 伺服器呼叫後端；上傳檔以 `/files/*` rewrite 轉給後端 |
 | 前台更新時機 | 後台存檔後馬上更新 | 前台資料以 `"use cache"` 快取；後台存檔的 Server Action 呼叫 `updateTag` 清掉 `products`／`projects` 標籤 |
-| 後台登入 | 後端 Session（Spring Security） | 後端的 JSESSIONID 由 Next 存成 httpOnly cookie（path `/admin`）；閒置 2 小時失效；同帳號連續失敗 5 次鎖 15 分鐘 |
+| 後台登入 | 後端 Session（Spring Security） | 後端的 JSESSIONID 由 Next 存成 httpOnly cookie（path `/admin`）；閒置 2 小時失效；同帳號連續失敗 5 次鎖 15 分鐘（上線前改為依 IP＋帳號計次，見 `SECURITY_REVIEW.md` F7） |
 | 上傳檔案 | 存在後端主機的資料夾 | `FileStorage` 介面＋本機資料夾實作（`app.upload-dir`）；部署時可換雲端實作 |
 
 已知限制：
