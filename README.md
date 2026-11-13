@@ -14,6 +14,16 @@ with a Next.js front end and a Spring Boot API.
 
 > 專案源自一間照明公司的實際需求，公開版改用**虛構品牌**明野照明（LUMENFIELD）。產品、案例與聯絡資訊皆為虛構；案例照片來自 Unsplash，來源見 [`frontend/public/demo/CREDITS.md`](frontend/public/demo/CREDITS.md)。
 
+## 畫面
+
+| 首頁 | 產品列表 |
+|---|---|
+| ![首頁](docs/images/homepage.png) | ![產品列表](docs/images/product.png) |
+
+後台詢價列表（唯讀 demo 帳號，聯絡人已遮罩）：
+
+![後台詢價列表](docs/images/ask_price.png)
+
 ## 亮點
 
 **後端 API 與權限**
